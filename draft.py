@@ -1,14 +1,19 @@
 # Simple Pong in Python 3 for Beginners
 
+from asyncore import close_all
+from fileinput import close
+from tracemalloc import stop
 import turtle
 import time
-import os
+import winsound
 
 wn = turtle.Screen()
 wn.title("Pong")
 wn.bgcolor("black")
 wn.setup(width=800, height=600)
 wn.tracer(0)
+
+doit = True
 
 # Score
 score_a = 0
@@ -73,7 +78,8 @@ def paddle_b_down():
     paddle_b.sety(y)
 
 def exit1():
-    exit()
+    # doit = False
+    wn.bye()
 
 # Keyboard binding
 wn.listen()
@@ -81,12 +87,10 @@ wn.onkeypress(paddle_a_up, "w")
 wn.onkeypress(paddle_a_down, "s")
 wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
-# wn.onkeypress(exit1, "Enter")
 wn.onkeypress(exit1, "Escape")
 
-
 # Main game loop
-while True:
+while doit:
     wn.update()
 
     # Move the ball
@@ -96,12 +100,12 @@ while True:
 
     # Border checking
     if ball.ycor() > 290:
-        os.system("mpg123 bounce.mp3&")
+        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
         ball.sety(290)
         ball.dy *= -1
 
     if ball.ycor() < -290:
-        os.system("mpg123 bounce.mp3&")
+        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
         ball.sety(-290)
         ball.dy *= -1
 
@@ -121,11 +125,11 @@ while True:
 
     # Paddle and ball collisions
     if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 40 and ball.ycor() > paddle_b.ycor() -40):
-        os.system("mpg123 bounce.mp3&")
+        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
         ball.setx(340)
         ball.dx *= -1
 
     if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 40 and ball.ycor() > paddle_a.ycor() -40):
-        os.system("mpg123 bounce.mp3&")
+        winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
         ball.setx(-340)
         ball.dx *= -1
