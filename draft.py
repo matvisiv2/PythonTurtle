@@ -13,8 +13,6 @@ wn.bgcolor("black")
 wn.setup(width=800, height=600)
 wn.tracer(0)
 
-doit = True
-
 # Score
 score_a = 0
 score_b = 0
@@ -78,7 +76,6 @@ def paddle_b_down():
     paddle_b.sety(y)
 
 def exit1():
-    # doit = False
     wn.bye()
 
 # Keyboard binding
@@ -90,7 +87,7 @@ wn.onkeypress(paddle_b_down, "Down")
 wn.onkeypress(exit1, "Escape")
 
 # Main game loop
-while doit:
+while True:
     wn.update()
 
     # Move the ball
